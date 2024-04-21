@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import CustomNavbar from "@/components/navbar";
 import { useEffect, useState} from 'react'
 import "../../styles/globals.css"
+import {Button} from "@nextui-org/react";
 
 
 import React from 'react';
@@ -55,13 +56,15 @@ export default function Challenge() {
      if (isLoading) return <p>Loading...</p>
   if (!data) return <p>No profile data</p>
 
-    return (<> <CustomNavbar /><div className="container flex flex-col items-center justify-center mx-auto h-screen">
+    return (<> <CustomNavbar /><div className="container flex flex-col items-center justify-center mx-auto h-screen" style={{height:"90vh"}}>
             <h1 className="text-4xl pb-5">Challenge: </h1> 
         <div className="image-container h-3/4">
         <Image src={"http://localhost:4009/" + data.imagePath + ".jpg"} alt="Slider" width={3024} height={4032} className="object-scale-down max-h-full" /> </div>
      <div>
   <input type="file" name="photo" id="photo" onChange={handleFileChange} />
-            <button onClick={handleSubmit}>Submit</button>
+                <Button size="lg" color="primary" onClick={handleSubmit} style={{marginTop:"3vh"}}>Submit</Button>
+
+            {/* <button onClick={handleSubmit}>Submit</button> */}
             </div>  
     </div></>
     );
