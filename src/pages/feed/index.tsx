@@ -47,23 +47,23 @@ export default function HomePage() {
     function goToChallenge() {
         // route to /challenge?challengeId=challengeId
         // challengId is last 8 characters of imagePath
-        const challengeId = challenges[currentImageIndex].imagePath.slice(-8);
+        const challengeId = challenges[currentImageIndex].id;
         router.push({
             pathname: '/challenge',
-            query: { challengeId: challengeId }
+            query: { id: challengeId }
         });
     }
     
+    const handleKeyDown = (e) => {
+        if(e.key === 'ArrowDown'){
+            goToNextImage();
+        } else if(e.key === 'ArrowUp'){
+            goToPreviousImage();
+        }
+    }
 
     useEffect(() => {
         // keydown up and down arrow keys
-        const handleKeyDown = (e) => {
-            if(e.key === 'ArrowDown'){
-                goToNextImage();
-            } else if(e.key === 'ArrowUp'){
-                goToPreviousImage();
-            }
-        }
         window.addEventListener('keydown', handleKeyDown);
             apiChallengesCall();
            }, []);
@@ -108,7 +108,7 @@ return (
   <div style={{width:"100%"}} className="container flex flex-col items-center justify-center mx-auto h-screen">
             <h1 className="text-4xl pb-5">Open Challenges</h1>
         <div className="image-container h-3/4" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
-<Image src={"http://localhost:4009/" + challenges[currentImageIndex].imagePath + ".jpg"} alt="Slider" width={3024} height={4032} className="object-scale-down max-h-full" /> </div>
+<Image src={"http://localhost:4009/" + challenges[currentImageIndex].imagePath + ".jpg"} alt="Slider" width={3024} height={4032} className="object-scale-down max-h-full" onClick={goToNextImage} /> </div>
 <Button color="primary" onClick={goToChallenge}>Attempt</Button>
         </div>
   </>
