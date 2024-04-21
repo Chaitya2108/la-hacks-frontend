@@ -177,11 +177,11 @@ return (
   <>
   
   <CustomNavbar />
-  <div style={{width:"100%"}} className="container flex flex-col items-center justify-center mx-auto h-screen">
+  <div style={{width:"100%",height:"90vh"}} className="container flex flex-col items-center justify-center mx-auto h-screen">
             <h1 className="text-4xl pb-5">Open Challenges</h1>
         <div className="image-container h-3/4" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
 <Image src={"http://localhost:4009/" + challenges[currentImageIndex].imagePath + ".jpg"} alt="Slider" width={3024} height={4032} className="object-scale-down max-h-full" onClick={goToNextImage} /> </div>
-<Button color="primary" onClick={goToChallenge}>Attempt</Button>
+<Button style={{marginTop:"2.5vh"}} color="primary" onClick={goToChallenge}>Attempt</Button>
         </div>
   </>
     

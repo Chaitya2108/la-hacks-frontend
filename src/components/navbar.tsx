@@ -19,22 +19,22 @@ const CustomNavbar: React.FC<NavbarProps> = () => {
     <Navbar style={{height:"10vh"}}>
       <NavbarBrand>
        
-        <p className="font-bold text-inherit">ACME</p>
+        <p className="font-bold text-inherit">GeoSnap</p>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
           <Link color="foreground" href="/">
-            Features
+            Add
           </Link>
         </NavbarItem>
         <NavbarItem isActive>
           <Link href="/" aria-current="page">
-            Customers
+            Feed
           </Link>
         </NavbarItem>
         <NavbarItem>
           <Link color="foreground" href="/">
-            Integrations
+            Account
           </Link>
         </NavbarItem>
       </NavbarContent>
