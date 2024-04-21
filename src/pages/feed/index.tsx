@@ -169,10 +169,8 @@ const [numNext, setNumNext] = useState(0);
 
     if(loading) return <div>Loading...</div>;
     if(!challenges) return <div>Loading...</div>;
-if (!isLoggedIn) {
-  router.push('/')
-}
-else {
+
+if (isLoggedIn) {
 return (
   <>
   
@@ -187,4 +185,8 @@ return (
     
   );
 }
+else {
+  router.push('/')
 }
+}
+

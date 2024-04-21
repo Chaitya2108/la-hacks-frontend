@@ -44,7 +44,7 @@ export default function add() {
             )}
             <Button size="lg" color="primary" onClick={handleSubmit} style={{marginTop:"3vh"}}>Submit</Button>
             {isSubmitted && 
-            (<h2 style={{fontSize:"2.5rem"}}>Image Added to Challenges!</h2>) }
+            (<h2 style={{fontSize:"2.5rem",margin:"1vh 0 0 0"}}>Image Added to Challenges!</h2>) }
          </div>
        
         </>
