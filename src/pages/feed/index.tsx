@@ -5,6 +5,9 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import {Button, ButtonGroup} from '@nextui-org/react';
+import CustomNavbar from "@/components/navbar";
+import {useAuth} from "../AuthContext"
+
 // ImageSlider.js
 export default function HomePage() {
     // synchronously calls api to get an array of chalenge ids
@@ -40,14 +43,14 @@ export default function HomePage() {
     }
 
     const router = useRouter();
-    const { name } = router.query;
+    const { isLoggedIn, username } = useAuth();
     function goToChallenge() {
         // route to /challenge?challengeId=challengeId
         // challengId is last 8 characters of imagePath
         const challengeId = challenges[currentImageIndex].imagePath.slice(-8);
         router.push({
             pathname: '/challenge',
-            query: { name: name, challengeId: challengeId }
+            query: { challengeId: challengeId }
         });
     }
     
@@ -94,12 +97,22 @@ const [numNext, setNumNext] = useState(0);
 
     if(loading) return <div>Loading...</div>;
     if(!challenges) return <div>Loading...</div>;
+if (!isLoggedIn) {
+  router.push('/')
+}
+else {
 return (
-    <div style={{width:"100%"}} className="container flex flex-col items-center justify-center mx-auto h-screen">
+  <>
+  
+  <CustomNavbar />
+  <div style={{width:"100%"}} className="container flex flex-col items-center justify-center mx-auto h-screen">
             <h1 className="text-4xl pb-5">Open Challenges</h1>
         <div className="image-container h-3/4" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
 <Image src={"http://localhost:4009/" + challenges[currentImageIndex].imagePath + ".jpg"} alt="Slider" width={3024} height={4032} className="object-scale-down max-h-full" /> </div>
 <Button color="primary" onClick={goToChallenge}>Attempt</Button>
         </div>
+  </>
+    
   );
+}
 }

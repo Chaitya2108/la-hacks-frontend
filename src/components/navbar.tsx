@@ -1,8 +1,13 @@
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button} from "@nextui-org/react";
 import "../styles/globals.css"
 import React from 'react'
+import {useAuth} from "../pages/AuthContext"
 
-const CustomNavbar: React.FC = () => {
+
+
+const CustomNavbar: React.FC<NavbarProps> = () => {
+    const { isLoggedIn, username } = useAuth();
+    console.log(isLoggedIn)
     return (
         <>
     <Navbar style={{height:"10vh"}}>
@@ -28,16 +33,35 @@ const CustomNavbar: React.FC = () => {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
+        {isLoggedIn ? (
+            <>
+            <NavbarItem>
+        <Button as={Link} color="primary" href="/add" variant="flat">
+          Add Image
+        </Button>
+      </NavbarItem>
       <NavbarItem>
+        <Button as={Link} color="primary" href="/api/auth/logout" variant="flat">
+          Log Out
+        </Button>
+      </NavbarItem>
+            </>
+        
+        ) : (
+            <>
+            <NavbarItem>
           <Button as={Link} color="primary" href="/api/auth/login" variant="flat">
             Log In
           </Button>
         </NavbarItem>
-        <NavbarItem>
+        {/* <NavbarItem>
           <Button as={Link} color="primary" href="/api/auth/login" variant="flat">
             Sign Up
           </Button>
-        </NavbarItem>
+        </NavbarItem></> */}
+        </>
+        )   
+    }
       </NavbarContent>
     </Navbar>
     </>

@@ -7,27 +7,38 @@ import { useEffect,useState } from "react";
 import { useUser } from '@auth0/nextjs-auth0/client'
 import {Button} from "@nextui-org/react";
 import { useRouter } from "next/router";
+import {useAuth} from "../pages/AuthContext"
+
 
 export default function Home() {
   const { user, error, isLoading } = useUser();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const router = useRouter();
-  console.log(user);
+  const { isLoggedIn, login, logout, setUserName } = useAuth(); // Assuming your AuthContext provides login, logout, and setUserName functions
 
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const router = useRouter();
+  
   useEffect(() => {
     if (user) {
-      setIsAuthenticated(true);
+      login(user.name || 'Guest')
     }
     else {
-      setIsAuthenticated(false);
+      logout()
     }
-  }, [user])
+  }, [user,login, logout])
+
+  // useEffect(() => {
+  //   if (user) {
+  //     setIsAuthenticated(true);
+  //   }
+  //   else {
+  //     setIsAuthenticated(false);
+  //   }
+  // }, [user])
+
+
 
   const handleRedirect = () => {
-    router.push({
-      pathname: '/feed',
-      query: {name: user?.name}
-    }); // Replace '/other-page' with the desired route
+    router.push('/feed'); // Replace '/other-page' with the desired route
   };
 
   
@@ -36,8 +47,8 @@ export default function Home() {
   return (
     <>
 
-    <CustomNavbar />
-    { isAuthenticated ? (
+    <CustomNavbar/>
+    { user ? (
         <div style={{alignItems:"center",textAlign:"center"}}>
         <h1 style={{fontSize:"3rem",textAlign:"center",paddingTop:"20vh",alignItems:"center"}}>Hello {user?.name}!</h1>
         <Button size="lg" color="primary" onClick={handleRedirect} style={{marginTop:"5vh"}}>Your Feed</Button>
