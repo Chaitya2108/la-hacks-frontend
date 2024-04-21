@@ -93,7 +93,7 @@ const [numNext, setNumNext] = useState(0);
     if(loading) return <div>Loading...</div>;
     if(!challenges) return <div>Loading...</div>;
 return (
-    <div className="container flex flex-col items-center justify-center mx-auto h-screen">
+    <div style={{width:"100%"}} className="container flex flex-col items-center justify-center mx-auto h-screen">
             <h1 className="text-4xl pb-5">Open Challenges</h1>
         <div className="image-container h-3/4" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
 <Image src={"http://localhost:4009/" + challenges[currentImageIndex].imagePath} alt="Slider" width={3024} height={4032} className="object-scale-down max-h-full" /> </div>
