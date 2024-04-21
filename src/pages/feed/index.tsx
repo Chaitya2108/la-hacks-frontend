@@ -8,6 +8,66 @@ import {Button, ButtonGroup} from '@nextui-org/react';
 import CustomNavbar from "@/components/navbar";
 import {useAuth} from "../AuthContext"
 
+// export default function HomePage() {
+//   const [dynamicURL,setDynamicURL] = useState([])
+//   const [images, setImages] = useState<any[]>([]);
+//   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+//    // Example dynamic part
+//   const staticPart = "http://localhost:4009/";
+//   const jpg = ".jpg"
+//   useEffect(() => {
+//     // Fetch images from the external route
+//     fetch('http://localhost:4009/images')
+//       .then(response => response.json())
+//       .then(data => {
+//         setImages(data),
+//         setDynamicURL(data[0].imagePath)
+//         console.log(data)
+//       })
+//       .catch(error => console.error('Error fetching images:', error));
+//   }, []);
+
+//   console.log(images)
+//   console.log(currentImageIndex)
+//   console.log(images.length)
+
+//   console.log(images); // Check if images array is populated correctly
+//   console.log(currentImageIndex); // Check the value of currentImageIndex
+//   console.log(images[currentImageIndex]); // Check the contents of the image object at the current index
+//   console.log(images[currentImageIndex]?.imagePath);
+
+//   const handleClick = () => {
+//     console.log(currentImageIndex)
+
+//     setCurrentImageIndex(prevIndex => (prevIndex + 1) % images.length);
+//     setDynamicURL(images[currentImageIndex].imagePath)
+//   };
+
+//   return (
+//     <>
+//     <CustomNavbar />
+//      <img     
+//         src={staticPart + dynamicURL + jpg}
+//         onClick={handleClick}
+//         style={{ cursor: 'pointer' }}
+//       />
+
+//     </>
+//     // <div>
+//     //   <h1>Click the image to change it</h1>
+//     //   <img src="http://localhost:4009/imageUploads/IMG_0034.jpg"></img>
+     
+//     // </div>
+    
+//   );
+
+// }
+
+
+
+
+
+
 // ImageSlider.js
 export default function HomePage() {
     // synchronously calls api to get an array of chalenge ids
@@ -15,27 +75,39 @@ export default function HomePage() {
     const [loading, setLoading] = useState(true);
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isProcessingClick, setIsProcessingClick] = useState(false); // State to track if a click is being processed
+
 
   const goToPreviousImage = () => {
+    if (!isProcessingClick) {
+      setIsProcessingClick(true)
+      setTimeout(() => setIsProcessingClick(false), 500);
     setCurrentImageIndex((prevIndex) => {
       const newIndex = prevIndex === 0 ? challenges.length - 1 : prevIndex - 1;
       return newIndex;
     });
+  }
   };
 
   const goToNextImage = () => {
+    if (!isProcessingClick) {
+      setIsProcessingClick(true)
+      setTimeout(() => setIsProcessingClick(false), 500);
     setCurrentImageIndex((prevIndex) => {
       const newIndex = (prevIndex + 1) % challenges.length;
       return newIndex;
     });
         setNumNext(numNext + 1);
   };
+}
+
 
     function apiChallengesCall() {
  fetch("http://localhost:4009/images")
         .then(res => res.json())
         .then(data => {
             setChallenges(data);
+            setCurrentImageIndex(0);
                 setLoading(false);
                 console.log(data);
         });
@@ -47,7 +119,7 @@ export default function HomePage() {
     function goToChallenge() {
         // route to /challenge?challengeId=challengeId
         // challengId is last 8 characters of imagePath
-        const challengeId = challenges[currentImageIndex].imagePath.slice(-8);
+        const challengeId = challenges[currentImageIndex].id;
         router.push({
             pathname: '/challenge',
             query: { challengeId: challengeId }
