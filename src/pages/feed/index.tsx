@@ -41,8 +41,10 @@ export default function HomePage() {
 
     const router = useRouter();
     const { name } = router.query;
-    function goToChallenge(challengeId) {
+    function goToChallenge() {
         // route to /challenge?challengeId=challengeId
+        // challengId is last 8 characters of imagePath
+        const challengeId = challenges[currentImageIndex].imagePath.slice(-8);
         router.push({
             pathname: '/challenge',
             query: { name: name, challengeId: challengeId }
@@ -96,8 +98,8 @@ return (
     <div style={{width:"100%"}} className="container flex flex-col items-center justify-center mx-auto h-screen">
             <h1 className="text-4xl pb-5">Open Challenges</h1>
         <div className="image-container h-3/4" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
-<Image src={"http://localhost:4009/" + challenges[currentImageIndex].imagePath} alt="Slider" width={3024} height={4032} className="object-scale-down max-h-full" /> </div>
-<Button color="primary" onClick={goToChallenge(challenges[currentImageIndex].imageId)} >Attempt</Button>
+<Image src={"http://localhost:4009/" + challenges[currentImageIndex].imagePath + ".jpg"} alt="Slider" width={3024} height={4032} className="object-scale-down max-h-full" /> </div>
+<Button color="primary" onClick={goToChallenge}>Attempt</Button>
         </div>
   );
 }
